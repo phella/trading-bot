@@ -454,15 +454,18 @@ class CIBArbitrageAnalyzer:
         print("="*70)
         print(f"Strategy: Buy Cairo Open, Sell Cairo Close (Tue, Wed, Thu, Sun)")
         print(f"Trigger: London Daily Move > 1%")
-        print(f"Execution Mode: {'REALISTIC' if realistic else 'PERFECT (Ideal)'}")
+        print(f"Execution Mode: {'THNDR REALISTIC' if realistic else 'PERFECT (Ideal)'}")
         
         if realistic:
-            print(f"\nCosts Applied:")
+            print(f"\n🏦 THNDR ACTUAL BROKER COSTS (EGP-based):")
             params = self.backtest_results['simulation_params']
-            print(f"  • Bid-Ask Spread: {params['bid_ask_spread']}%")
-            print(f"  • Slippage: {params['slippage_pct']}%")
-            print(f"  • Commission: {params['commission_pct']}%")
-            print(f"  • Execution Delay: {params['execution_delay_pct']}%")
+            print(f"  • Fixed per transaction: 2.00 EGP")
+            print(f"  • Variable commission: 0.10%")
+            print(f"  • Third-party fee: 0.03%")
+            print(f"  ───────────────────────────────")
+            total_cost = params['commission_pct']  # This is 0.2613% total
+            print(f"  • TOTAL COST PER TRADE (Buy+Sell): {total_cost:.4f}%")
+            print(f"  • Cost per $10,000 trade: $26.13")
         
         print(f"\n{'='*70}")
         print(f"SUMMARY STATISTICS")
@@ -551,14 +554,15 @@ class CIBArbitrageAnalyzer:
         correlation = self.calculate_correlation()
         
         self.generate_trading_signals(london_move_threshold=1.0)
-        # Run backtest with REALISTIC costs by default
+        # Run backtest with THNDR ACTUAL COSTS
+        # Real fee structure: 2 EGP per tx + 0.1% variable + 0.03% third-party = 0.2613% total
         self.backtest_arbitrage(
             initial_capital=10000,
-            slippage_pct=0.1,           # 0.1% slippage (realistic)
-            bid_ask_spread=0.05,        # 0.05% bid-ask (tight market)
-            commission_pct=0.1,         # 0.1% commission (typical)
-            execution_delay_pct=0.0,    # 0% delay for now
-            realistic_mode=True         # REALISTIC simulation
+            slippage_pct=0.0,           # 0% (included in fixed fees)
+            bid_ask_spread=0.0,         # 0% (included in commission)
+            commission_pct=0.2613,      # 0.2613% actual Thndr fee (2 EGP + 0.1% + 0.03%)
+            execution_delay_pct=0.0,    # 0% (no significant delay cost)
+            realistic_mode=True         # THNDR ACTUAL simulation
         )
         self.print_backtest_results()
         

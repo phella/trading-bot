@@ -1,0 +1,57 @@
+# Thndr Configuration: Real Fees, Liquidity, and Execution Delays
+# Update these with actual Thndr rates from your account
+
+[broker]
+name = "thndr"
+market = "EGX"  # Egyptian Exchange
+
+[costs]
+# Commission rates (verify on Thndr dashboard)
+commission_pct = 0.10          # Standard Egyptian broker: 0.05-0.15%
+
+# Bid-ask spreads (actual spreads on Thndr)
+bid_ask_spread_pct = 0.08      # CIB is liquid, expect 0.05-0.10% on tight volumes
+                               # (wider during lower liquidity)
+
+# Slippage (market impact + partial fills)
+# Note: If buying 1 min after open, gap partially filled = less slippage
+slippage_pct = 0.15            # 1 min delay = 0.10-0.20% typical slippage
+
+[execution]
+# Your specific delay: buying 1 min after market open
+execution_delay_pct = 0.20     # Increased from 0.0% due to 1-min delay
+execution_delay_minutes = 1    # Buy 1 min after 10:30 open = 10:31
+
+[strategy]
+signal_threshold = 1.0         # London move > 1% triggers signal
+cairo_market_open_time = "10:30"  # EGX opens at 10:30 EET
+cairo_market_close_time = "14:30" # EGX closes at 14:30 EET
+hold_duration_minutes = 240    # Hold ~4 hours (10:31 to 14:30)
+
+[pairs]
+# Primary pair
+[[pairs.cib]]
+cairo_ticker = "COMI"
+london_ticker = "CBKD.L"
+signal_source = "CBKD.L"       # Monday-Friday close signals Cairo trades
+
+[[pairs.heliopolis]]
+cairo_ticker = "HRHO"
+london_ticker = "EFGD.L"
+signal_source = "EFGD.L"
+
+[testing]
+# Historical backtest dates
+backtest_start = "2025-04-14"
+backtest_end = "2026-04-14"
+backtest_mode = true
+
+# Live trading parameters
+live_trading_enabled = false   # Set to true when ready
+paper_trading_enabled = true   # Recommended: test first
+
+[alerts]
+# Alert settings
+check_interval_minutes = 5
+save_to_log = true
+log_file = "thndr_alerts.log"
