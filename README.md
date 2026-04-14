@@ -122,22 +122,31 @@ analyzer.print_backtest_results()
 ## 📁 Project Structure
 
 ```
-cib-arbitrage/
-├── cib_arbitrage_test.py      # Core analyzer class
+trading-bot/
+├── README.md                   # Main project overview (this file)
+├── cib_arbitrage_test.py       # Core analyzer class
 ├── run_arbitrage.py            # Multi-ticker orchestrator
 ├── requirements.txt            # Python dependencies
 ├── .gitignore                  # Git exclusions
-├── README.md                   # This file
+├── LICENSE                     # MIT License
 │
-├── docs/
+├── docs/                       # Comprehensive documentation
+│   ├── ANSWER_TO_YOUR_QUESTION.md      # Strategy overview & Q&A
 │   ├── BEFORE_AFTER_COMPARISON.md      # Impact of realistic costs
 │   ├── VALIDATION_GUIDE.md             # 10 sanity checks
-│   ├── CONFIGURATION_GUIDE.md          # How to customize
-│   ├── ANSWER_TO_YOUR_QUESTION.md      # Comprehensive overview
-│   └── REALISTIC_SIMULATION.md         # Cost modeling details
+│   ├── CONFIGURATION_GUIDE.md          # How to customize for your broker
+│   ├── REALISTIC_SIMULATION.md         # Cost modeling details
+│   ├── QUICK_REFERENCE.md              # Quick start guide
+│   ├── PROJECT_SUMMARY.md              # Project status & history
+│   ├── COMPLETION_SUMMARY.md           # Development completion notes
+│   ├── TEST_RESULTS.md                 # Backtest results
+│   └── README_ARBITRAGE.md             # Detailed arbitrage mechanics
 │
-└── examples/
-    └── EXAMPLES.py             # 10+ copy-paste code examples
+├── examples/
+│   └── EXAMPLES.py             # 10+ copy-paste code examples
+│
+└── venv/                       # Python virtual environment
+    └── (dependencies installed)
 ```
 
 ## 🔧 Configuration
@@ -182,7 +191,7 @@ analyzer.backtest_arbitrage(
 # Expected: ~+0.2%+ per trade (breakeven territory)
 ```
 
-See [CONFIGURATION_GUIDE.md](docs/CONFIGURATION_GUIDE.md) for detailed parameter explanations.
+See [docs/CONFIGURATION_GUIDE.md](docs/CONFIGURATION_GUIDE.md) for detailed parameter explanations.
 
 ## 📊 Testing Multiple Pairs
 
@@ -219,11 +228,16 @@ analyzer = CIBArbitrageAnalyzer('YOUR_CAIRO_TICKER', 'YOUR_LONDON_TICKER', start
 
 ## 📚 Documentation
 
+All documentation is in the [docs/](docs/) folder:
+
+- **[ANSWER_TO_YOUR_QUESTION.md](docs/ANSWER_TO_YOUR_QUESTION.md)** - Complete strategy overview & insights
 - **[BEFORE_AFTER_COMPARISON.md](docs/BEFORE_AFTER_COMPARISON.md)** - Shows why realistic costs matter
 - **[VALIDATION_GUIDE.md](docs/VALIDATION_GUIDE.md)** - 10 sanity checks proving accuracy
 - **[CONFIGURATION_GUIDE.md](docs/CONFIGURATION_GUIDE.md)** - How to set up for your broker
 - **[REALISTIC_SIMULATION.md](docs/REALISTIC_SIMULATION.md)** - Technical cost modeling details
-- **[ANSWER_TO_YOUR_QUESTION.md](docs/ANSWER_TO_YOUR_QUESTION.md)** - Complete strategy overview
+- **[QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md)** - Quick start troubleshooting
+- **[PROJECT_SUMMARY.md](docs/PROJECT_SUMMARY.md)** - Project overview & status
+- **[README_ARBITRAGE.md](docs/README_ARBITRAGE.md)** - Detailed arbitrage mechanics
 
 ## 🔬 What Makes This Different
 
@@ -261,7 +275,7 @@ Have improvements? Submit pull requests for:
 
 ## 📞 Support
 
-Questions? See the comprehensive docs in `/docs/` folder or open an issue.
+Questions? See comprehensive docs in [docs/](docs/) folder or open an issue.
 
 ## 📄 License
 
