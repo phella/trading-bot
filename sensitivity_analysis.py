@@ -241,13 +241,16 @@ if __name__ == "__main__":
         trades = backtest_threshold(unified_df, threshold)
         
         if len(trades) > 0:
-            win_rate = (trades['profitable'].sum() / len(trades)) * 100
+            winning_trades = trades['profitable'].sum()
+            losing_trades = len(trades) - winning_trades
+            win_rate = (winning_trades / len(trades)) * 100
             total_pnl = trades['realistic_pnl'].sum()
             avg_return = trades['realistic_return'].mean()
             
             threshold_results.append({
                 'Threshold': f"{threshold}%",
-                'Trades': len(trades),
+                'Total Trades': len(trades),
+                'Wins/Losses': f"{winning_trades}/{losing_trades}",
                 'Win Rate': f"{win_rate:.1f}%",
                 'Avg Return': f"{avg_return:.4f}%",
                 'Total P&L': f"${total_pnl:.2f}",
@@ -286,20 +289,28 @@ if __name__ == "__main__":
     # Find best threshold
     best_threshold = max(threshold_results, key=lambda x: float(x['Total P&L'].replace('$', '')))
     print(f"\n✅ Best Threshold: {best_threshold['Threshold']}")
-    print(f"   Trades: {best_threshold['Trades']}")
+    print(f"   Total Trades: {best_threshold['Total Trades']}")
+    print(f"   Wins/Losses: {best_threshold['Wins/Losses']}")
+    print(f"   Win Rate: {best_threshold['Win Rate']}")
     print(f"   Total P&L: {best_threshold['Total P&L']}")
     
     # Intraday comparison
     intraday_pnl = intraday_trades['realistic_pnl'].sum() if len(intraday_trades) > 0 else 0
-    print(f"\n📈 Intraday Trading:")
-    print(f"   Trades: {len(intraday_trades)}")
+    intraday_wins = (intraday_trades['profitable'].sum()) if len(intraday_trades) > 0 else 0
+    intraday_losses = len(intraday_trades) - intraday_wins if len(intraday_trades) > 0 else 0
+    print(f"\n📈 Intraday Trading (0.5% threshold):")
+    print(f"   Total Trades: {len(intraday_trades)}")
+    print(f"   Wins/Losses: {intraday_wins}/{intraday_losses}")
     print(f"   Total P&L: ${intraday_pnl:.2f}")
     
     # Original strategy (1.0% threshold)
     original_trades = backtest_threshold(unified_df, 1.0)
     original_pnl = original_trades['realistic_pnl'].sum() if len(original_trades) > 0 else 0
+    original_wins = (original_trades['profitable'].sum()) if len(original_trades) > 0 else 0
+    original_losses = len(original_trades) - original_wins if len(original_trades) > 0 else 0
     print(f"\n🎯 Original Strategy (1.0% threshold):")
-    print(f"   Trades: {len(original_trades)}")
+    print(f"   Total Trades: {len(original_trades)}")
+    print(f"   Wins/Losses: {original_wins}/{original_losses}")
     print(f"   Total P&L: ${original_pnl:.2f}")
     
     print(f"\n" + "─"*80)
