@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "ticker": "COMI.CA",
+    "entry_price": 24.5,
+    "entry_date": "2026-04-14T02:07:26.180901",
+    "shares": 100,
+    "status": "OPEN",
+    "sell_strategy": "time",
+    "sell_target": null,
+    "exit_price": null,
+    "exit_date": null,
+    "pnl_dollar": null,
+    "pnl_percent": null
+  }
+]
